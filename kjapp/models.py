@@ -1,22 +1,30 @@
 from django.db import models
 from django.utils import timezone
 # Create your models here.
+
+
 class Client(models.Model):
  
     DIET_CHOICES = {
-        'V' :"Vegetarian",
-        'N' : "Non-Vegetarian" ,
-        'G' :  "Vegan"
+        'Vegetarian' :"Vegetarian",
+        'Non-Vegetarian' : "Non-Vegetarian" ,
+        'Vegan' :  "Vegan"
     }
     name = models.CharField(max_length =255)
-    age = models.PositiveSmallIntegerField()
+    age = models.PositiveSmallIntegerField(null=True  )
     phone = models.CharField(max_length =12 , unique = True)
     email = models.EmailField(unique = True)
     diet_language= models.CharField(max_length=255 , null =True)
-    gender = models.CharField(max_length = 1)
-    diet_preference = models.CharField(max_length = 1 , choices = DIET_CHOICES )
-
+    gender = models.CharField(max_length = 10)
+    diet_preference = models.CharField(max_length = 15 , choices = DIET_CHOICES )
+    note = models.TextField(null =True , blank = True)
+    file =models.FileField(upload_to='uploads/', max_length=255 , null=True , default=None )
+    
+    def __str__(self):
+        return self.file.name
    
+
+
 
 class Address(models.Model):
     city = models.CharField(max_length =255)
@@ -39,44 +47,48 @@ class Client_Plan(models.Model):
         ('Paused' , 'Pause'),
         ('Suspended' , 'Suspend'),
         ('Expired' , 'Expired'),
-
     ]
+    
     last_plan_updated_timestamp = models.DateTimeField(default=timezone.now)
     start_time = models.DateField(null=False, blank=False)
     end_time = models.DateField(null =False , blank =False)
     plan_level = models.CharField(max_length = 20, choices =PLAN_LEVEL_CHOICES  )   
     status = models.CharField(max_length = 20 , choices = STATUS_CHOICES  )
-    target_weight = models.CharField(max_length = 10 , null =True)
+    duration = models.IntegerField()
     client = models.ForeignKey(Client , on_delete=models.CASCADE,  null=False , blank=False , related_name ="plan")
 
 class Client_Insights(models.Model):
+    target_weight = models.CharField(max_length = 10 , null =True)
     height = models.CharField(max_length = 10)
     current_weight = models.CharField(max_length = 10)
-    note = models.TextField(null =True , blank = True)
-    duration = models.CharField(max_length=40)
     time = models.DateTimeField(default = timezone.now)
     last_plan_updated_timestamp = models.DateTimeField(default=timezone.now)
     persona =models.CharField(max_length=50 , null =True , blank = True)
     height_Unit  = models.CharField(max_length=6 , default="inch")
     weight_Unit  = models.CharField(max_length=2, default="kg")
     client = models.ForeignKey(Client , on_delete=models.CASCADE , null=False , blank=False, related_name='insights')
-
+    
 
 
 class Diet_Plan(models.Model):
-    day1 = models.JSONField(null=True)
-    day2 = models.JSONField(null=True)
-    day3 = models.JSONField(null=True)
-    day4 = models.JSONField(null=True)
-    day5 = models.JSONField(null=True)
-    day6 = models.JSONField(null=True)
-    day7 = models.JSONField(null=True)
+    day1 = models.JSONField( null= True, blank = True,)
+    day2 = models.JSONField( null= True, blank = True,)
+    day3 = models.JSONField( null= True, blank = True,)
+    day4 = models.JSONField( null= True, blank = True,)
+    day5 = models.JSONField( null= True, blank = True,)
+    day6 = models.JSONField( null= True, blank = True,)
+    day7 = models.JSONField( null= True, blank = True)
+    note = models.CharField(max_length =255 , null= True, blank = True )
     time = models.DateTimeField(default = timezone.now)
-    client = models.ForeignKey(Client , on_delete=models.CASCADE , null=False , blank=False)
+    client = models.ForeignKey(Client , on_delete=models.CASCADE, related_name="diet" )
     
 
     
 
+class RecipeData(models.Model):
+    id = models.IntegerField(primary_key =True)
+    name = models.CharField(max_length = 150)
+    recipieLink = models.URLField(max_length=200 , null = True , blank =True)
 
 
 
