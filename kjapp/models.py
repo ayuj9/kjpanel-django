@@ -71,6 +71,7 @@ class Client_Insights(models.Model):
 
 
 class Diet_Plan(models.Model):
+    meal_Time = models.JSONField(null= True, blank = True)
     day1 = models.JSONField( null= True, blank = True,)
     day2 = models.JSONField( null= True, blank = True,)
     day3 = models.JSONField( null= True, blank = True,)

@@ -21,6 +21,7 @@ router.register('statusUpdate', views.StatusUpdateViewSet , basename='Update-sta
 router.register('timeUpdate', views.TimeUpdateViewSet , basename='time-update')
 router.register('note' , views.NoteViewSet , basename='add-note')
 router.register('clientName' , views.ClientNameViewSet , basename='client-name')
+router.register('mealTime' , views.MealTimeViewSet , basename='meal-time')
 
 router.register('measures', views.MeasureDetailsViewSet , basename='measure-details')
 clients_router =routers.NestedDefaultRouter(router , 'client' , lookup='client')

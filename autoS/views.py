@@ -33,15 +33,15 @@ def import_data(request):
     if request.method == 'POST' and request.FILES['json_file']:
         json_file = request.FILES['json_file']
         data = json.load(json_file)     
-        for i in range(560,832):
+        for i in range(813,814):
             recipeLink = data[str(i)]['RecipieLink']
-            # recipeLnk1 = data[str(i)]['RecipieLink_1']
+            recipeLink1 = data[str(i)]['RecipieLink_1']
             # print(i , recipeLnk1)
-            recipeL = recipeLink
-            # if recipeLink == 'None':
-            #     recipeL = recipeLnk1
-            # else :
-            #     recipeL = recipeLink    
+            # recipeL = recipeLink1
+            if recipeLink == 'None':
+                recipeL = recipeLink1
+            else :
+                recipeL = recipeLink    
             names = Names(
 
                 id = data[str(i)]['ID'] , # Accessing data with str(i) as key

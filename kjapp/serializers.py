@@ -53,7 +53,7 @@ class ClientSerailizer(serializers.ModelSerializer):
 class Diet_PlanSerializer(serializers.ModelSerializer):
     class Meta:
         model = Diet_Plan
-        fields = ['id', 'day1', 'day2', 'day3', 'day4', 'day5', 'day6', 'day7', 'time', 'client','note']
+        fields = ['id', 'day1', 'day2', 'day3', 'day4', 'day5', 'day6', 'day7', 'time', 'meal_Time',  'client','note']
         # read_only_fields = ['client']
 
     def update(self, instance, validated_data):
@@ -65,6 +65,7 @@ class Diet_PlanSerializer(serializers.ModelSerializer):
         instance.day6 = validated_data.get('day6', instance.day6)
         instance.day7 = validated_data.get('day7', instance.day7)
         instance.time = validated_data.get('time', instance.time)
+        instance.meal_Time = validated_data.get('meal_Time', instance.meal_Time)
         instance.save()
         return instance
 
@@ -181,3 +182,12 @@ class ClientNameSerializer(serializers.ModelSerializer):
     class Meta:
         model = Client
         fields = ['id' , 'name' , 'phone']        
+
+
+class MealTimeSerializer(serializers.ModelSerializer):
+    class Meta:
+      model = Diet_Plan
+      fields =['meal_Time']
+
+
+   
