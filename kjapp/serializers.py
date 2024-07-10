@@ -1,4 +1,4 @@
-from .models import Client , Address , Client_Plan ,Client_Insights , Diet_Plan , RecipeData
+from .models import Client , Address , Client_Plan ,Client_Insights , Diet_Plan , RecipeData , FileUpload
 from rest_framework import serializers
 from django.utils import timezone
 
@@ -37,11 +37,22 @@ class AddressSerializer(serializers.ModelSerializer):
         instance.city = validated_data.get('city', instance.city)
         instance.save()
         return instance
+    
+class FileSerializer(serializers.ModelSerializer):
+    def create(self, validated_data):
+        client_id = self.context['client_id']
+        return FileUpload.objects.create(client_id = client_id , **validated_data)
+
+    class Meta:
+        model = FileUpload
+        fields= ['id' , 'file']     
 
 class ClientSerailizer(serializers.ModelSerializer):
+    files = FileSerializer(many=True,read_only = True)
     class Meta:
         model = Client
-        fields = '__all__'
+        fields = [ 'id' , 'name' , 'age' , 'gender' , 'phone' , 'note',
+                   'email'  , 'diet_preference' , 'diet_language','files']
 
 
 # class Diet_PlanSerializer(serializers.ModelSerializer):
@@ -133,7 +144,7 @@ class Client_All_DetailsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Client
         fields = ['id' , 'name' , 'age' , 'gender' , 'phone' , 'note',
-                   'email'  , 'diet_preference' , 'file',
+                   'email'  , 'diet_preference' ,
                   'diet_language'  , 'address' , 'insights'  , 'plan']
         
     
@@ -153,10 +164,7 @@ class Client_All_DetailsSerializer(serializers.ModelSerializer):
 
         return client
     
-class FileSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Client
-        fields= ['file'] 
+
         
 
 class TimeUpdateSerializr(serializers.ModelSerializer):

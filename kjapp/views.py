@@ -2,13 +2,14 @@ from django.shortcuts import render
 from django.http import HttpResponse 
 from rest_framework.viewsets import ModelViewSet , GenericViewSet
 from rest_framework.filters import SearchFilter
-from .models import Client , Address , Client_Plan , Client_Insights , Diet_Plan ,RecipeData
+from .models import Client , Address , Client_Plan , Client_Insights , Diet_Plan ,RecipeData , FileUpload
 from  .serializers import ClientSerailizer , AddressSerializer , Client_PlanSerializer , Client_InsightSerializer , Diet_PlanSerializer , Member_ListSerializer , Client_All_DetailsSerializer , Insights_FormSerializer,StatusUpdateSerializer, FileSerializer, TimeUpdateSerializr , AddNoteSerializer , SearchRecipeSerializer ,ClientNameSerializer , MealTimeSerializer
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.response import Response
 from  rest_framework.mixins import CreateModelMixin,RetrieveModelMixin
 from .filters import StartsWithFilterBackend
 from rest_framework import status
+
 # Create your views here.
 
 class AddressViewSet(ModelViewSet):
@@ -55,22 +56,37 @@ class TimeUpdateViewSet(ModelViewSet):
     queryset = Client_Plan.objects.all()    
     serializer_class = TimeUpdateSerializr
 
+# class FileUploadViewSet(ModelViewSet):
+#     queryset = Client.objects.all()
+#     serializer_class = FileSerializer
+#     parser_classes = (MultiPartParser, FormParser)
+
+
+
+
+#     def update(self, request, *args, **kwargs):
+#         serializer = self.get_serializer(data=request.data)
+#         if serializer.is_valid():
+#             serializer.save()
+#             return Response(serializer.data, status=status.HTTP_201_CREATED)
+#         else:
+#             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
 class FileUploadViewSet(ModelViewSet):
-    queryset = Client.objects.all()
     serializer_class = FileSerializer
-    parser_classes = (MultiPartParser, FormParser)
+    
+
+    def get_serializer_context(self):
+        return {'client_id':self.kwargs['client_pk__pk']}
 
 
-    def update(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        else:
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    def get_queryset(self):
+        client_id = self.kwargs.get("client_pk__pk")
+        print(client_id)
         
-#     def get(self, request):
-#        return Response([FileSerializer(file).data for file in Client.objects.all()])    
+        # return FileUpload.objects.filter(client_id )
+
 
 class DietPlanViewSet(ModelViewSet , CreateModelMixin):
     queryset = Diet_Plan.objects.all()
@@ -86,12 +102,13 @@ class DietPlanViewSet(ModelViewSet , CreateModelMixin):
 class ClientDietPlanViewSet(ModelViewSet):
     serializer_class = Diet_PlanSerializer
 
-    def get_queryset(self):
-        client_id = self.kwargs['client_pk']
-        return Diet_Plan.objects.filter(client_id=client_id)
+    def get_queryset(self , *args, **kwargs):
+        return Diet_Plan.objects.filter(client_id=self.kwargs["client_pk__pk"])
+        
 
-    def perform_create(self, serializer):
-        client_id = self.kwargs['client_pk']
+    def perform_create(self,  serializer):
+        
+        client_id = self.kwargs.get("client_pk__pk")
         client = Client.objects.get(pk=client_id)
         serializer.save(client=client)
 

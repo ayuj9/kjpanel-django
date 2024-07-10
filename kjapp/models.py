@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from django.core.validators import FileExtensionValidator
 # Create your models here.
 
 
@@ -18,12 +19,15 @@ class Client(models.Model):
     gender = models.CharField(max_length = 10)
     diet_preference = models.CharField(max_length = 15 , choices = DIET_CHOICES )
     note = models.TextField(null =True , blank = True)
-    file =models.FileField(upload_to='uploads/', max_length=255 , null=True , default=None )
+    # file =models.FileField(upload_to='uploads/', max_length=255 , null=True , default=None )
     
     def __str__(self):
         return self.file.name
    
 
+class FileUpload(models.Model):
+    file = models.FileField(upload_to='kjapp/images' , validators=[FileExtensionValidator(allowed_extensions=['pdf'])])
+    client = models.ForeignKey(Client , on_delete=models.CASCADE , null=True , blank=True , related_name='files' )
 
 
 class Address(models.Model):
