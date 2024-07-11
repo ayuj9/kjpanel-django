@@ -103,7 +103,8 @@ WSGI_APPLICATION = 'kjpanel.wsgi.application'
 # }
 
 DATABASES = {
-    'default': dj_database_url.parse(os.environ.get("DATABASE_URL"))
+    # 'default': dj_database_url.parse(os.environ.get("DATABASE_URL"))
+    'default': dj_database_url.parse("postgresql://kjpanel_user:WRMaehlZ9dsTL1VlEd5L1HGU8GYAvn6E@dpg-cq7v3beehbks7397b8kg-a.oregon-postgres.render.com/kjpanel")
 }
 
 
