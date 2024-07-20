@@ -12,7 +12,7 @@ RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 
 
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "kjpanel.wsgi:application"]
+CMD ["gunicorn", "--bind", "0.0.0.0:${PORT}", "kjpanel.wsgi:application"]
 
 EXPOSE ${PORT}
 
