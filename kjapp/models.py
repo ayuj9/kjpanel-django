@@ -34,6 +34,8 @@ class Address(models.Model):
     city = models.CharField(max_length =255)
     state = models.CharField(max_length =255)
     country =models.CharField(max_length =255)
+    zone = models.CharField(max_length=255 , blank=True)
+    
     client = models.OneToOneField(Client , on_delete=models.CASCADE , related_name = "address")
 
 
@@ -59,8 +61,9 @@ class Client_Plan(models.Model):
     plan_level = models.CharField(max_length = 20, choices =PLAN_LEVEL_CHOICES  )   
     status = models.CharField(max_length = 20 , choices = STATUS_CHOICES  )
     duration = models.IntegerField()
+    count_down = models.IntegerField(null = True , blank = True)
     client = models.ForeignKey(Client , on_delete=models.CASCADE,  null=False , blank=False , related_name ="plan")
-
+    
 class Client_Insights(models.Model):
     target_weight = models.CharField(max_length = 10 , null =True)
     height = models.CharField(max_length = 10)

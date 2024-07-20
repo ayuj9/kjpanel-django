@@ -3,12 +3,14 @@ from django.http import HttpResponse
 from rest_framework.viewsets import ModelViewSet , GenericViewSet
 from rest_framework.filters import SearchFilter
 from .models import Client , Address , Client_Plan , Client_Insights , Diet_Plan ,RecipeData , FileUpload
-from  .serializers import ClientSerailizer , AddressSerializer , Client_PlanSerializer , Client_InsightSerializer , Diet_PlanSerializer , Member_ListSerializer , Client_All_DetailsSerializer , Insights_FormSerializer,StatusUpdateSerializer, FileSerializer, TimeUpdateSerializr , AddNoteSerializer , SearchRecipeSerializer ,ClientNameSerializer , MealTimeSerializer
+from  .serializers import ClientSerailizer , AddressSerializer , Client_PlanSerializer , Client_InsightSerializer , Diet_PlanSerializer , Member_ListSerializer , Client_All_DetailsSerializer , Insights_FormSerializer,StatusUpdateSerializer, FileSerializer, TimeUpdateSerializr , AddNoteSerializer , SearchRecipeSerializer ,ClientNameSerializer , MealTimeSerializer , CountDownSerializer , TimeZoneSerializer
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.response import Response
 from  rest_framework.mixins import CreateModelMixin,RetrieveModelMixin
 from .filters import StartsWithFilterBackend
 from rest_framework import status
+from django.utils import timezone
+import pytz 
 
 # Create your views here.
 
@@ -51,6 +53,10 @@ class CLientAllDetailsViewSet(ModelViewSet):
 class StatusUpdateViewSet(ModelViewSet):
     queryset = Client_Plan.objects.all()
     serializer_class = StatusUpdateSerializer 
+
+class CountDownViewSet(ModelViewSet):
+    queryset = Client_Plan.objects.all()
+    serializer_class = CountDownSerializer
 
 class TimeUpdateViewSet(ModelViewSet):
     queryset = Client_Plan.objects.all()    
@@ -139,3 +145,10 @@ class ClientNameViewSet(ModelViewSet):
     search_fields = ['name','phone' ]
 
 
+class ZoneViewSet(ModelViewSet):
+    queryset = Address.objects.all()
+    serializer_class = TimeZoneSerializer
+   
+    
+
+    

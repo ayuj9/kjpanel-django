@@ -1,19 +1,41 @@
 from .models import Client , Address , Client_Plan ,Client_Insights , Diet_Plan , RecipeData , FileUpload
 from rest_framework import serializers
 from django.utils import timezone
-
+import pytz
 
 class CountrySerializer(serializers.ModelSerializer):
     class Meta:
         model =Address
         fields = ['country' ]
 
+class TimeZoneSerializer(serializers.ModelSerializer):
+    current_time = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Address
+        fields = ['zone' ,'current_time' , 'country' ]  
+
+
+    def get_current_time(self, obj):
+        # Use pytz to convert UTC time to the specified timezone
+        try:
+            if obj.zone:
+                tz = pytz.timezone(obj.zone)
+                current_time = timezone.now().astimezone(tz)
+                return current_time.strftime('%d-%m , %H:%M')
+            return None
+        except pytz.UnknownTimeZoneError:
+            return None     
+
+
 
 class PlanSerializer(serializers.ModelSerializer):
     class Meta:
         model = Client_Plan
-        fields = ['id','plan_level','duration', 'status' ,'start_time' , 'end_time' , 'client' ]  
-        read_only_fields = ('client',)         
+        fields = ['id','plan_level','duration', 'status' ,'start_time' , 'end_time' , 'client' , 'count_down' ]  
+        read_only_fields = ('client',)       
+
+
 
 class Client_InsightSerializer(serializers.ModelSerializer):
     class Meta:
@@ -28,7 +50,7 @@ class Client_InsightSerializer(serializers.ModelSerializer):
 class AddressSerializer(serializers.ModelSerializer):
     class Meta:
         model = Address
-        fields = ['id' , 'city' , 'state' , 'country' , 'client']    
+        fields = ['id' , 'city' , 'state' , 'country','zone' , 'client']    
         read_only_fields = ('client',)    
 
     def update(self, instance, validated_data):
@@ -112,8 +134,8 @@ class StatusUpdateSerializer(serializers.ModelSerializer):
 
 
 class Member_ListSerializer(serializers.ModelSerializer):
-    address  = CountrySerializer();
-    plan = PlanSerializer(many=True);
+    address  = TimeZoneSerializer()
+    plan = PlanSerializer(many=True)
     
     class Meta:
         model = Client
@@ -138,9 +160,9 @@ class Insights_FormSerializer(serializers.ModelSerializer):
 
 
 class Client_All_DetailsSerializer(serializers.ModelSerializer):
-    insights = Insights_FormSerializer(many=True);
-    address = AddressSerializer();
-    plan = PlanSerializer(many =True);
+    insights = Insights_FormSerializer(many=True)
+    address = AddressSerializer()
+    plan = PlanSerializer(many =True)
     class Meta:
         model = Client
         fields = ['id' , 'name' , 'age' , 'gender' , 'phone' , 'note',
@@ -172,8 +194,13 @@ class TimeUpdateSerializr(serializers.ModelSerializer):
         model = Client_Plan
         fields = ['start_time' , 'end_time']            
     
+class CountDownSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Client_Plan
+        fields = ['count_down']
+           
     
-    
+
 class AddNoteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Diet_Plan
@@ -198,4 +225,8 @@ class MealTimeSerializer(serializers.ModelSerializer):
       fields =['meal_Time']
 
 
-   
+
+
+        
+
+
