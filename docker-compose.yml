@@ -1,0 +1,12 @@
+version: '2.29.0'  # Specify the Docker Compose version
+
+services:  # Define the services
+  web:  # Name of the service
+    build:
+      context: .
+    ports:
+      - "8080:80"
+    env_file:
+      - .env   
+    volumes:
+      - .:/app

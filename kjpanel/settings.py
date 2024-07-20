@@ -11,12 +11,13 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path 
-# import dj_database_url
+import dj_database_url
 import os
+from  dotenv  import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
+load_dotenv()
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
@@ -89,16 +90,16 @@ WSGI_APPLICATION = 'kjpanel.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME':'kjpanel',
-        'USER': 'postgres',
-        'PASSWORD': 'ghar12345',
-        'HOST': 'localhost',
-        'PORT': '5432',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME':os.getenv('DB_NAME'),
+#         'USER': os.getenv('DB_NAME') ,
+#         'PASSWORD': os.getenv('DB_PASSWORD'),
+#         'HOST': os.getenv('DB_HOST'),
+#         'PORT': '5432',
+#     }
+# }
 
 
 # DATABASES = {
@@ -109,10 +110,9 @@ DATABASES = {
 # }
 
 
-# DATABASES = {
-#     # 'default': dj_database_url.parse(os.environ.get("DATABASE_URL"))
-#     'default': dj_database_url.parse("postgresql://kjpanel_user:WRMaehlZ9dsTL1VlEd5L1HGU8GYAvn6E@dpg-cq7v3beehbks7397b8kg-a.oregon-postgres.render.com/kjpanel")
-# }
+DATABASES = {
+    'default': dj_database_url.parse(os.environ.get("DB_URL"))
+}
 
 
 # Password validation
