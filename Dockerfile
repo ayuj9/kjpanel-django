@@ -1,6 +1,6 @@
 FROM python:3.12.4-slim-bullseye
 
-ENV PYTHONBUFFERED=1
+ENV PYTHONBUFFERED=1 
 
 
 
@@ -11,7 +11,7 @@ RUN pip install --upgrade pip
 
 RUN pip install -r requirements.txt
 
-EXPOSE ${PORT}
+EXPOSE 8080
 
 CMD ["gunicorn", "--bind", "0.0.0.0:${PORT}", "kjpanel.wsgi:application"]
 
