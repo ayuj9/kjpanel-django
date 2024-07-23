@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: kjpanel-django
+    env: python
+    plan: free
+    buildCommand: ""
+    startCommand: gunicorn kjpanel.wsgi:application
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: DATABASE_URL
+        value: postgresql://kjbackendv1:rBHFEDl0an7qGW5dDzBNxMVfYLLhqO1x@dpg-cqduu688fa8c73dt2j2g-a.singapore-postgres.render.com/kjpaneldbv1
+      - key: 61089341a84ea361293e816889609dadd27605e85b8b3568544e6f10d2e6e497
+        value: "#aq#!h155fnz@d9@9vmi@yr2*_uakb%!)_y6sx&4nkhk01*a!("
