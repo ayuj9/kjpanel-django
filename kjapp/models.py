@@ -36,7 +36,7 @@ class Address(models.Model):
     state = models.CharField(max_length =255)
     country =models.CharField(max_length =255)
     zone = models.CharField(max_length=255 , blank=True)
-    
+
     client = models.OneToOneField(Client , on_delete=models.CASCADE , related_name = "address")
 
 
