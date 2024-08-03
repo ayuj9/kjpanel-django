@@ -18,11 +18,12 @@ Including another URLconf
 from django.urls import path , include
 from django.contrib import admin
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from debug_toolbar.toolbar import debug_toolbar_urls
 
 urlpatterns = [
     path('auto/', include('autoS.urls')),
     path('admin/', admin.site.urls),
     path('kj/' , include('kjapp.urls'))
-]
+]+ debug_toolbar_urls()
 
 urlpatterns += staticfiles_urlpatterns()

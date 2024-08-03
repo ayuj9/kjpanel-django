@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from django.core.validators import FileExtensionValidator
+import datetime
 # Create your models here.
 
 
@@ -88,6 +89,7 @@ class Diet_Plan(models.Model):
     day7 = models.JSONField( null= True, blank = True)
     note = models.CharField(max_length =255 , null= True, blank = True )
     time = models.DateTimeField(default = timezone.now)
+    date = models.DateField(("Date"))
     client = models.ForeignKey(Client , on_delete=models.CASCADE, related_name="diet" )
     
 

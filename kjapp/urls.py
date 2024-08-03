@@ -25,14 +25,22 @@ router.register('mealTime' , views.MealTimeViewSet , basename='meal-time')
 router.register('measures', views.MeasureDetailsViewSet , basename='measure-details')
 router.register('zone' , views.ZoneViewSet , basename='zone-time')
 
+
+
+# router.register('ImportRecipe' , views.import_data , basename='import-recipe')
+
+
 clients_router =routers.NestedSimpleRouter(router , r'client' , lookup='client_pk')
-clients_router.register(r'diet_plan' , views.ClientDietPlanViewSet , basename='client-dietplan')
+clients_router.register(r'diet_plan/(?P<date>\d{4}-\d{1,2}-\d{1,2})' , views.ClientDietPlanViewSet , basename='client-dietplan')
 clients_router.register(r'file' , views.FileUploadViewSet , basename='client-file')
 
 
+urlpatterns=[
+    path('importData/' , views.import_data )
+]
 
 # if settings.DEBUG :
-urlpatterns = router.urls + clients_router.urls + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+urlpatterns = urlpatterns + router.urls + clients_router.urls + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 # urlpatterns=[
 #     # path('/' , include(router.urls)),

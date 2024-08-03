@@ -6,13 +6,16 @@ from .models import Client , Address , Client_Plan , Client_Insights , Diet_Plan
 from  .serializers import ClientSerailizer , AddressSerializer , Client_PlanSerializer , Client_InsightSerializer , Diet_PlanSerializer , Member_ListSerializer , Client_All_DetailsSerializer , Insights_FormSerializer,StatusUpdateSerializer, FileSerializer, TimeUpdateSerializr , AddNoteSerializer , SearchRecipeSerializer ,ClientNameSerializer , MealTimeSerializer , CountDownSerializer , TimeZoneSerializer
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.response import Response
-from  rest_framework.mixins import CreateModelMixin,RetrieveModelMixin
+from  rest_framework.mixins import CreateModelMixin,RetrieveModelMixin , UpdateModelMixin
 from .filters import StartsWithFilterBackend
 from rest_framework import status
 from django.utils import timezone
+import json
+import datetime
 import pytz 
 
 # Create your views here.
+
 
 class AddressViewSet(ModelViewSet):
     queryset = Address.objects.all()
@@ -89,14 +92,14 @@ class FileUploadViewSet(ModelViewSet):
 
     def get_queryset(self):
         client_id = self.kwargs.get("client_pk__pk")
-        print(client_id)
-        
         # return FileUpload.objects.filter(client_id )
 
 
-class DietPlanViewSet(ModelViewSet , CreateModelMixin):
+class DietPlanViewSet(ModelViewSet , CreateModelMixin , UpdateModelMixin):
     queryset = Diet_Plan.objects.all()
-    serializer_class =  Diet_PlanSerializer    
+    serializer_class =  Diet_PlanSerializer  
+    
+      
     
 # class ClientDietPlanViewSet(ModelViewSet):
 #     serializer_class = Diet_PlanSerializer
@@ -105,19 +108,31 @@ class DietPlanViewSet(ModelViewSet , CreateModelMixin):
 #         return Diet_Plan.objects.filter(client = self.kwargs['client_pk'])
     
 
-class ClientDietPlanViewSet(ModelViewSet):
+class ClientDietPlanViewSet(ModelViewSet , CreateModelMixin , UpdateModelMixin):
     serializer_class = Diet_PlanSerializer
 
     def get_queryset(self , *args, **kwargs):
-        return Diet_Plan.objects.filter(client_id=self.kwargs["client_pk__pk"])
+
+        queryset =  Diet_Plan.objects.filter(client_id=self.kwargs["client_pk__pk"])
+        date_str = self.kwargs.get('date', None)
+        if date_str:
+            try:
+                queryset = queryset.filter(date=date_str)
+            except ValueError:
+                queryset = queryset.none()
         
+        return queryset
 
     def perform_create(self,  serializer):
         
         client_id = self.kwargs.get("client_pk__pk")
         client = Client.objects.get(pk=client_id)
         serializer.save(client=client)
-
+    
+    def perform_update(self, serializer):
+        client_id = self.kwargs.get("client_pk__pk")
+        client = Client.objects.get(pk=client_id)
+        serializer.save(client=client)
     
    
 class NoteViewSet(ModelViewSet):
@@ -152,3 +167,19 @@ class ZoneViewSet(ModelViewSet):
     
 
     
+def import_data(request):
+    if request.method == 'POST' and request.FILES['json_file']:
+        json_file = request.FILES['json_file']
+        data = json.load(json_file)     
+        for i in range(1,813):
+            names = RecipeData(
+                id = data[i]['id'] , # Accessing data with str(i) as key
+                name = data[i]["name"],
+                
+                recipieLink  = data[i]['recipieLink']  # Adjust for correct key name
+                
+            )
+            names.save()
+        return render(request, 'index.html')
+    return render(request, 'index.html')
+

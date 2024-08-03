@@ -3,6 +3,7 @@ diff-match-patch==20230430
 dj-database-url==2.2.0
 Django==5.0.6
 django-cors-headers==4.4.0
+django-debug-toolbar==4.4.6
 django-filter==24.2
 django-rest-framework==0.1.0
 django-rest-framework-nested==0.0.1
