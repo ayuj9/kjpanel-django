@@ -12,7 +12,7 @@ jobs:
     timeout-minutes: 30
 
     strategy:
-      max-parallel: 4
+      max-parallel: 2
       matrix:
         python-version: [3.8, 3.9, 3.12]
 
