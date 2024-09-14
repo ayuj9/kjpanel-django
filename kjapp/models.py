@@ -7,11 +7,11 @@ import datetime
 
 class Client(models.Model):
  
-    DIET_CHOICES = {
-        'Vegetarian' :"Vegetarian",
-        'Non-Vegetarian' : "Non-Vegetarian" ,
-        'Vegan' :  "Vegan"
-    }
+    DIET_CHOICES = [
+        ('Vegetarian' ,"Veg"),
+        ('Non-Vegetarian' ,"Non-Veg" ),
+        ('Vegan' , "Vegan")
+    ]
     name = models.CharField(max_length =255)
     age = models.PositiveSmallIntegerField(null=True  )
     phone = models.CharField(max_length =12 , unique = True)
@@ -53,7 +53,7 @@ class Client_Plan(models.Model):
         ('Active' , 'Activate'),
         ('Paused' , 'Pause'),
         ('Suspended' , 'Suspend'),
-        ('Expired' , 'Expired'),
+        ('Expired' , 'Expire'),
     ]
     
     last_plan_updated_timestamp = models.DateTimeField(default=timezone.now)
