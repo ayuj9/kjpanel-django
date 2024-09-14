@@ -124,15 +124,11 @@ WSGI_APPLICATION = 'kjpanel.wsgi.application'
 # }
 
 
-if os.getenv('RENDER_INTERNAL'):
-    DATABASES = {
-        'default': dj_database_url.parse(os.getenv('INTERNAL_DB_URL'))
-    }
-else:
-    DATABASES = {
-        'default': dj_database_url.parse(os.getenv('EXTERNAL_DB_URL', 'sqlite:///db.sqlite3'))
-    }
-
+DATABASES = {
+    'default': dj_database_url.parse(
+        os.getenv('INTERNAL_DB_URL', os.getenv('EXTERNAL_DB_URL', 'sqlite:///db.sqlite3'))
+    )
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators

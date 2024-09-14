@@ -43,9 +43,9 @@ urlpatterns=[
 urlpatterns = urlpatterns + router.urls + clients_router.urls + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 # urlpatterns=[
-#     # path('/' , include(router.urls)),
-#     path('client/' , views.CLientViewSet.as_view() )
-# ]\\\
+#     path('/' , include(router.urls)),
+
+# ]
     
 
 
