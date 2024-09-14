@@ -26,7 +26,7 @@ load_dotenv()
 SECRET_KEY = 'django-insecure-pmlaz_46i1oe*+%jot@h=k2sqw2zg@f+h2mo@t_l)tpsr64p(t'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG =False
 
 ALLOWED_HOSTS = []
 
@@ -125,10 +125,9 @@ WSGI_APPLICATION = 'kjpanel.wsgi.application'
 
 
 DATABASES = {
-    'default': dj_database_url.parse(
-        os.getenv('INTERNAL_DB_URL', os.getenv('EXTERNAL_DB_URL', 'sqlite:///db.sqlite3'))
-    )
+    'default': dj_database_url.parse(os.environ.get("DB_URL"))
 }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
