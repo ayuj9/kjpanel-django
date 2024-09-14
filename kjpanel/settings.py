@@ -124,9 +124,14 @@ WSGI_APPLICATION = 'kjpanel.wsgi.application'
 # }
 
 
-DATABASES = {
-    'default': dj_database_url.parse(os.environ.get("DB_URL"))
-}
+if os.getenv('RENDER_INTERNAL'):
+    DATABASES = {
+        'default': dj_database_url.parse(os.getenv('INTERNAL_DB_URL'))
+    }
+else:
+    DATABASES = {
+        'default': dj_database_url.parse(os.getenv('EXTERNAL_DB_URL', 'sqlite:///db.sqlite3'))
+    }
 
 
 # Password validation
