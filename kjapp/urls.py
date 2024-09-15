@@ -39,8 +39,12 @@ urlpatterns=[
     path('importData/' , views.import_data )
 ]
 
-# if settings.DEBUG :
-urlpatterns = urlpatterns + router.urls + clients_router.urls + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+urlpatterns += router.urls + clients_router.urls
+
+# Add static files in DEBUG mode
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
 
 # urlpatterns=[
 #     path('/' , include(router.urls)),
