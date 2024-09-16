@@ -37,21 +37,22 @@ jobs:
 
       - name: Collect static files
         env:
-          DATABASE_URL: ${{ vars.DATABASE_URL }}  # Set in GitHub Secrets
+          DATABASE_URL: ${{ secrets.DB_URL }}  # Set in GitHub Secrets
         run: |
             python manage.py collectstatic --noinput    
 
       - name: Migrate database
         env:
-            DATABASE_URL: ${{ vars.DATABASE_URL }}  # Set in GitHub Secrets
+            DATABASE_URL: ${{ secrets.DB_URL }}  # Set in GitHub Secrets
         run: |
               python manage.py migrate
 
 
       - name: Deploy to Render
-        if: success()
         run: |
-            git push render main  # Push code to Render remote
+            git push render main  # Replace 'render' with your Render remote
+        env:
+            RENDER_API_KEY: ${{ secrets.RENDER_API }}
       
       - name: Notify success
         if: success()
