@@ -48,7 +48,7 @@ jobs:
 
       - name: Deploy to Render
         run: |
-          git push render main  # Replace 'render' with your Render remote
+          git push Render remote main  # Replace 'render' with your Render remote
         env:
           RENDER_API_KEY: ${{ secrets.RENDER_API }}
 
