@@ -16,7 +16,6 @@ jobs:
       postgres:
         image: postgres:16
 
-
     strategy:
       matrix:
         python-version: [3.12]
@@ -37,23 +36,22 @@ jobs:
 
       - name: Collect static files
         env:
-          DATABASE_URL: ${{ secrets.DB_URL }}  # Set in GitHub Secrets
+          DATABASE_URL: ${{ secrets.DB_URL }} # Set in GitHub Secrets
         run: |
-            python manage.py collectstatic --noinput    
+          python manage.py collectstatic --noinput
 
       - name: Migrate database
         env:
-            DATABASE_URL: ${{ secrets.DB_URL }}  # Set in GitHub Secrets
+          DATABASE_URL: ${{ secrets.DB_URL }} # Set in GitHub Secrets
         run: |
-              python manage.py migrate
-
+          python manage.py migrate
 
       - name: Deploy to Render
         run: |
-            git push render main  # Replace 'render' with your Render remote
+          git push render main  # Replace 'render' with your Render remote
         env:
-            RENDER_API_KEY: ${{ secrets.RENDER_API }}
-      
+          RENDER_API_KEY: ${{ secrets.RENDER_API }}
+
       - name: Notify success
         if: success()
         run: echo "Django application successfully deployed!"
