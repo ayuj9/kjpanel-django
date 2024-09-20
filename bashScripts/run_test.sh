@@ -19,6 +19,6 @@ pip install requests
 
 echo "Venv Virtual Environment activated"
 
-# python ./tests/test.py
+python ./tests/test.py
 
 echo "test File started"
