@@ -1,6 +1,7 @@
 import requests
 
-url = "http://127.0.0.1:8000/kj"
+# url = "http://127.0.0.1:8000/kj"
+url = "https://panel-django.onrender.com/kj/"
 
 
 def get_test_api(url) :
