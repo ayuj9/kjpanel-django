@@ -8,7 +8,7 @@
 pip install --upgrade pip
 
 
-if [-f "requirements.txt"]; then
+if [ -f "requirements.txt" ]; then
     echo "Installing dependencies"
     pip install -r requirements.txt
     echo "All dependencies installed"

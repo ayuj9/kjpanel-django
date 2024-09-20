@@ -75,7 +75,7 @@ jobs:
           python-version: ${{matrix.python-version}}
         
       - name: run test
-        run : bash ./bashScripts/run_test.sh
+        run : source  ./bashScripts/run_test.sh
        
     
 
