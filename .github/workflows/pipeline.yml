@@ -28,30 +28,56 @@ jobs:
         with:
           python-version: ${{matrix.python-version}}
 
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt --verbose
-          pip install pylint
+      - name : Activate Virtual Enviornment
+        run :  bash ./bashScripts/run_env.sh     
 
-      - name: Collect static files
-        env:
-          DATABASE_URL: ${{ secrets.DB_URL }} # Set in GitHub Secrets
-        run: |
-          python manage.py collectstatic --noinput
+      - name: Install dependencies with bash
+        run: bash ./bashScripts/install_dep.sh
 
-      - name: Migrate database
-        env:
-          DATABASE_URL: ${{ secrets.DB_URL }} # Set in GitHub Secrets
-        run: |
-          python manage.py migrate
 
-      - name: Deploy to Render
-        run: |
-          git push Render remote main 
-        env:
-          RENDER_API_KEY: ${{ secrets.RENDER_API }}
+
+      # - name: Collect static files
+      #   env:
+      #     DATABASE_URL: ${{ secrets.DB_URL }} # Set in GitHub Secrets
+      #   run: |
+      #     python manage.py collectstatic --noinput
+
+      # - name: Migrate database
+      #   env:
+      #     DATABASE_URL: ${{ secrets.DB_URL }} # Set in GitHub Secrets
+      #   run: |
+      #     python manage.py migrate
+
+      # - name: run test
+      #   run : source ./bashScripts/run_test.sh
 
       - name: Notify success
         if: success()
         run: echo "Django application successfully deployed!"
+
+  test :
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:16
+
+    strategy:
+      matrix:
+        python-version: [3.12]
+
+    steps:
+      - name: checkout actions
+        uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v3
+        with:
+          python-version: ${{matrix.python-version}}
+        
+      - name: run test
+        run : bash ./bashScripts/run_test.sh
+       
+    
+
+  
+ 
