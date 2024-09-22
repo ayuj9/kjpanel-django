@@ -1,5 +1,7 @@
 #!/bin/bash
 
+ls
+
 
 VENV_DIR="myenv"
 
@@ -27,3 +29,20 @@ else
     echo "Virtual Environment directory does not exist. Activation failed."
     exit 1
 fi
+
+pip install --upgrade pip
+
+
+if [ -f "requirements.txt" ]; then
+    echo "Installing dependencies"
+    pip install -r requirements.txt
+    echo "All dependencies installed"
+    python manage.py runserver
+
+else 
+   echo "No requirements.txt file found"   
+fi    
+
+echo "Dependencies have been successfully installed."   
+
+

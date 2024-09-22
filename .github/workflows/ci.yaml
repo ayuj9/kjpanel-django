@@ -1,0 +1,64 @@
+name: django-pipeline
+
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      CI : true
+      DB_NAME: mydatabase
+      DB_USER: myuser
+      DB_PASSWORD: mypassword
+      DB_HOST : localhost
+      DB_PORT : 5430
+
+
+    services:
+      postgres:
+        image: postgres:16
+        ports:
+          - 5430:5432
+        env:
+          POSTGRES_DB: ${{ env.DB_NAME }}
+          POSTGRES_USER: ${{ env.DB_USER }}
+          POSTGRES_PASSWORD: ${{ env.DB_PASSWORD }}
+    
+
+    strategy:
+      matrix:
+        python-version: [3.12]
+
+    steps:
+      - name: checkout actions
+        uses: actions/checkout@v4
+
+      - name: setup
+        uses: actions/setup-python@v3
+        with:
+          python-version: ${{matrix.python-version}}
+
+      - name: Setting django server
+        run : bash ./bashScripts/setup_django.sh &
+
+      - name: Notify success
+        run: |
+          for i in {1..30}; do
+            if curl -s http://127.0.0.1:8000/ > /dev/null; then
+              echo "Server is up"
+              break
+            fi
+            echo "Waiting ..."
+            sleep 10
+          done
+
+
+      - name: sample test
+        run: curl http://127.0.0.1:8000/        
+    
+
