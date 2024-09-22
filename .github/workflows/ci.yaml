@@ -46,7 +46,7 @@ jobs:
       - name: Setting django server
         run : bash ./bashScripts/setup_django.sh &
 
-      - name: Notify success
+      - name: Waiting for Server to come up
         run: |
           for i in {1..30}; do
             if curl -s http://127.0.0.1:8000/ > /dev/null; then
@@ -56,9 +56,10 @@ jobs:
             echo "Waiting ..."
             sleep 10
           done
-
-
-      - name: sample test
-        run: curl http://127.0.0.1:8000/        
     
 
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name : test file
+        run : source ./bashScripts/run_test.sh
