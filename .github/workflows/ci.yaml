@@ -11,21 +11,22 @@ jobs:
     runs-on: ubuntu-latest
     env:
       CI: true
-      DB_NAME: mydatabase
-      DB_USER: myuser
-      DB_PASSWORD: mypassword
-      DB_HOST: localhost
-      DB_PORT: 5430
+      DB_URL: ${{ secrets.DB_URL }}
+      # DB_NAME: mydatabase
+      # DB_USER: myuser
+      # DB_PASSWORD: mypassword
+      # DB_HOST: localhost
+      # DB_PORT: 5430
 
-    services:
-      postgres:
-        image: postgres:16
-        ports:
-          - 5430:5432
-        env:
-          POSTGRES_DB: ${{ env.DB_NAME }}
-          POSTGRES_USER: ${{ env.DB_USER }}
-          POSTGRES_PASSWORD: ${{ env.DB_PASSWORD }}
+    # services:
+    #   postgres:
+    #     image: postgres:16
+    #     ports:
+    #       - 5430:5432
+    #     env:
+    #       POSTGRES_DB: ${{ env.DB_NAME }}
+    #       POSTGRES_USER: ${{ env.DB_USER }}
+    #       POSTGRES_PASSWORD: ${{ env.DB_PASSWORD }}
 
     strategy:
       matrix:
