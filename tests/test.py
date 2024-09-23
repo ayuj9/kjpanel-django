@@ -1,7 +1,7 @@
 import requests
 
 # url = "http://127.0.0.1:8000/kj"
-url = "https://panel-django.onrender.com/kj/"
+url = "https://panel-django.onrender.com/kj"
 
 
 def get_test_api(url) :
@@ -11,7 +11,7 @@ def get_test_api(url) :
         if response.status_code == 200 :
             print(f"Checked : {url}" )
     except requests.exceptions.HTTPError as err:
-        print(f"HTTP error occurred: ")
+        print(f"HTTP error occurred: " , url)
     except Exception as err:
         print(f"Other error occurred: {err}")
     return None
@@ -36,7 +36,7 @@ get_api_urls = [
      url + "/client/1/",
      url + "/plan/1/",
      url + "/address/1",
-     url + "client/1/diet_plan/2024-08-01/",
+     url + "/client/1/diet_plan/2024-08-01/",
 
 ]
 

@@ -1,24 +1,17 @@
 #!/bin/bash
 
+echo "New enviornment Starting"
+python3 -m venv .venv1
 
-
-echo "New Venv Starting"
-
-# echo "virtualenv $VIRTUAL_ENV ==  and  $PWD/venv1" 
-
-# source ./tests/venv1/bin/activate
-source $(pwd)/tests/venv1/bin/activate
-
-
+echo "Env. successfully created"
+source .venv1/bin/activate
 echo "Virtual Environment activated successfully."
 
-pip install --upgrade pip
 
-# pip install -r ./tests/requirements.txt
-pip install requests
+echo "Installing dependencies"
+pip install -r ./tests/requirements.txt
+pip freeze >  ./tests/requirements.txt
 
-echo "Venv Virtual Environment activated"
-
-python ./tests/test.py
 
 echo "test File started"
+python3 ./tests/test.py
