@@ -1,6 +1,8 @@
 import pytest
-import requests
+from rest_framework import status
+# from django.urls import reverse
 import os
+import requests
 
 
 # BASE_URL = "https://panel-django.onrender.com/kj"
