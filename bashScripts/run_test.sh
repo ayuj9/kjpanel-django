@@ -9,8 +9,7 @@ echo "Virtual Environment activated successfully."
 
 
 echo "Installing dependencies"
-pip install pytest requests django
-
+pip install -r ./tests/requirements.txt
 
 
 echo "test File started"
