@@ -1,7 +1,7 @@
 import requests
 
 
-BASE_URL = "https://panel-django.onrender.com/kj"
+BASE_URL = "http://127.0.0.1:8000/kj"
 
 
 def test_get_client_allDetail():
