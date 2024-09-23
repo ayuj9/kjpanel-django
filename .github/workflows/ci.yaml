@@ -44,6 +44,13 @@ jobs:
         with:
           python-version: ${{matrix.python-version}}
 
+      - name: Build Docker image
+        run: |
+            docker build -t myapp:latest .
+            docker save myapp:latest > myapp.tar    
+            
+            
+
       - name: Setting django server
         run : bash ./bashScripts/setup_django.sh &
 
@@ -57,7 +64,11 @@ jobs:
             echo "Waiting ..."
             sleep 10
           done
-    
+      - name: Upload Docker image as artifact
+        uses: actions/upload-artifact@v3
+        with:
+            name: myapp-image
+            path: myapp.tar
 
   test:
     runs-on: ubuntu-latest
@@ -66,6 +77,18 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+
+      - name: Download Docker image artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: myapp-image    
+
+      - name: Load Docker image
+        run: |
+            docker load -i myapp.tar
+            docker run -d -p 8080:8080 myapp:latest
+            sleep 20  # Wait for the server to initialize
+        
 
       - name : check server
         run : curl http://localhost:8080/health  
