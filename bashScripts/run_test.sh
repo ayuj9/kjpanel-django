@@ -14,4 +14,4 @@ pip freeze >  ./requirements.txt
 
 
 echo "test File started"
-python test.py
+python ./tests/test.py
