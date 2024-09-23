@@ -10,7 +10,7 @@ echo "Virtual Environment activated successfully."
 
 echo "Installing dependencies"
 pip install -r ./tests/requirements.txt
-pip freeze >  ./tests/requirements.txt
+pip freeze >  ./requirements.txt
 
 
 echo "test File started"
