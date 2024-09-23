@@ -9,8 +9,7 @@ echo "Virtual Environment activated successfully."
 
 
 echo "Installing dependencies"
-python3 -m pip install pytest .
-pip install requests 
+pip install pytest requests 
 
 
 
