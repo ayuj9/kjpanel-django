@@ -9,17 +9,6 @@ on:
 
 jobs:
 
-
-  test:
-    runs-on: ubuntu-latest
-    # needs : build
-    
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-        
-      - name : test file
-        run : source ./bashScripts/run_test.sh
   build:
     runs-on: ubuntu-latest
     env:
@@ -70,9 +59,13 @@ jobs:
           done
     
 
-  # test:
-  #   runs-on: ubuntu-latest
-  #   needs : build
-  #   steps:
-  #     - name : test file
-  #       run : source ./bashScripts/run_test.sh
+  test:
+    runs-on: ubuntu-latest
+    needs : build
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name : test file
+        run : source ./bashScripts/run_test.sh
