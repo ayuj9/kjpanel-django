@@ -14,4 +14,4 @@ pip freeze >  ./tests/requirements.txt
 
 
 echo "test File started"
-python3 ./tests/test.py
+pytest 
