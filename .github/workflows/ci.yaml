@@ -67,5 +67,8 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - name : check server
+        run : curl http://localhost:8080/health  
+
       - name : test file
         run : source ./bashScripts/run_test.sh
