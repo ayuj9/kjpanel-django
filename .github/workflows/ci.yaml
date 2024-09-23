@@ -43,6 +43,14 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y python3 python3-pip
 
+      - name: List bashScripts directory
+        run: ls -la ./bashScripts
+
+      - name: Make setup_django.sh executable
+        run: chmod +x ./bashScripts/setup_django.sh
+
+          
+
       - name: Setting django server
         run: bash ./bashScripts/setup_django.sh &
 
