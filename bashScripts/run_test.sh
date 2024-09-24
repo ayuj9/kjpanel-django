@@ -13,4 +13,4 @@ pip install -r ./tests/requirements.txt
 
 
 echo "test File started"
-pytest
+pytest -s
