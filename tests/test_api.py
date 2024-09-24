@@ -9,20 +9,6 @@ import requests
 BASE_URL = os.getenv("BASE_URL", "http://127.0.0.1:8000/kj")
 
 
-# def test_get_client_allDetail():
-#     response = requests.get(BASE_URL  + "/clientAllDetail/")
-#     assert response.status_code == 200 
-
-
-# def test_get_client_plan():
-#     response = requests.get(BASE_URL  + "/plan/1")
-#     assert response.status_code == 200 
-
-
-# def test_get_client_plan():
-#     response = requests.get(BASE_URL  + "/address/1")
-#     assert response.status_code == 200 
-
 
 def test_post_client_plan():
     data =   {  "name": "lhyati ji ",
@@ -59,6 +45,22 @@ def test_post_client_plan():
             }]} 
     response = requests.post(BASE_URL  + "/clientAllDetail" , json=data)
     assert response.status_code == 200
+
+
+# def test_get_client_allDetail():
+#     response = requests.get(BASE_URL  + "/clientAllDetail/")
+#     assert response.status_code == 200 
+
+
+# def test_get_client_plan():
+#     response = requests.get(BASE_URL  + "/plan/1")
+#     assert response.status_code == 200 
+
+
+# def test_get_client_plan():
+#     response = requests.get(BASE_URL  + "/address/1")
+#     assert response.status_code == 200 
+
 
 
 # def test_post_diet():
