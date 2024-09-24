@@ -25,7 +25,12 @@ def test_post_client_plan():
     assert response_get.status_code == 200 , f"GET request failed with status {response_get.status_code}"
     print("retieved data" , response_get.json())
     retrieved_data = response_get.json()
-    assert retrieved_data['phone'] == person_details['phone'] , f"Expected {person_details['name']} but got {retrieved_data['name']}"
+    assert isinstance(retrieved_data, list), "Expected list of client details"
+    client_data = retrieved_data[0]  # Access the first client in the list
+    
+    # Assert that the phone number matches
+    assert client_data['phone'] == person_details['phone'], f"Expected {person_details['phone']} but got {client_data['phone']}"
+
 
 
 
