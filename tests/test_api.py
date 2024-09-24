@@ -4,7 +4,7 @@ import os
 import json
 import requests
 import logging
-
+from ..kjapp.models import Client
 json_file_path = os.path.join(os.path.dirname(__file__), 'data.json')
 
 logging.basicConfig(level=logging.INFO)
@@ -17,9 +17,16 @@ with open(json_file_path, 'r') as json_file:
     data = json.load(json_file)
 
 def test_post_client_plan():
+    print("Clients in DB before POST:", Client.objects.all())
     person_details = data[0].get("details")
     response = requests.post(BASE_URL  + "/clientAllDetail" , json=person_details)
     print("post data" ,response.json())
+
+
+    response1 = Client.post(reverse('clientAllDetail'), json=person_details)
+    print("Clients in DB after POST:", Client.objects.all())
+    print(response1.json())
+
     print("POST status code:", response.status_code)
     assert response.status_code == 200 , f"POST request failed with status {response.status_code}"
     # response_get = requests.get(BASE_URL + "/clientAllDetail")
