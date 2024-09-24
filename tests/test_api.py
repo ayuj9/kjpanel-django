@@ -21,7 +21,7 @@ def test_post_client_plan():
     response = requests.post(BASE_URL  + "/clientAllDetail" , json=person_details)
     assert response.status_code == 200 , f"POST request failed with status {response.status_code}"
     print("get data" ,response.json())
-    response_get = requests.get(BASE_URL + "/clientAllDetail/1")
+    response_get = requests.get(BASE_URL + "/clientAllDetail")
     assert response_get.status_code == 200 , f"GET request failed with status {response_get.status_code}"
     print("retieved data" , response_get.json())
     retrieved_data = response_get.json()
