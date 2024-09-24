@@ -10,8 +10,8 @@ json_file_path = os.path.join(os.path.dirname(__file__), 'data.json')
 logging.basicConfig(level=logging.INFO)
 
 
-BASE_URL = "https://panel-django.onrender.com/kj"
-# BASE_URL = os.getenv("BASE_URL", "http://127.0.0.1:8000/kj")
+# BASE_URL = "https://panel-django.onrender.com/kj"
+BASE_URL = os.getenv("BASE_URL", "http://127.0.0.1:8000/kj")
 
 with open(json_file_path, 'r') as json_file:
     data = json.load(json_file)
