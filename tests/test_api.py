@@ -9,9 +9,9 @@ import requests
 BASE_URL = os.getenv("BASE_URL", "http://127.0.0.1:8000/kj")
 
 
-def test_get_client_allDetail():
-    response = requests.get(BASE_URL  + "/clientAllDetail/")
-    assert response.status_code == 200 
+# def test_get_client_allDetail():
+#     response = requests.get(BASE_URL  + "/clientAllDetail/")
+#     assert response.status_code == 200 
 
 
 # def test_get_client_plan():
@@ -24,41 +24,41 @@ def test_get_client_allDetail():
 #     assert response.status_code == 200 
 
 
-# def test_post_client_plan():
-#     data =   {  "name": "lhyati ji ",
-#         "age": 21,
-#         "gender": "m",
-#         "phone": "2423991513",
-#         "email": "ayu112@gmail.com",
-#         "diet_preference": "Vegetarian",
-#         "diet_language": "hindi",
-#        "note": "",
-#         "address": {
-#             "city": "gwl",
-#             "state": "mp",
-#             "country": "india",
-#             "zone":"Asia/Kolkata"
-#         },
-#         "insights": [
-#             {
-#             "height": 5,
-#             "current_weight": 50,
-#             "target_weight": 60,
-#             "height_Unit": "cm",
-#             "weight_Unit": "kg",
-#             "persona": "reduce wt"
+def test_post_client_plan():
+    data =   {  "name": "lhyati ji ",
+        "age": 21,
+        "gender": "m",
+        "phone": "2423991513",
+        "email": "ayu112@gmail.com",
+        "diet_preference": "Vegetarian",
+        "diet_language": "hindi",
+       "note": "",
+        "address": {
+            "city": "gwl",
+            "state": "mp",
+            "country": "india",
+            "zone":"Asia/Kolkata"
+        },
+        "insights": [
+            {
+            "height": 5,
+            "current_weight": 50,
+            "target_weight": 60,
+            "height_Unit": "cm",
+            "weight_Unit": "kg",
+            "persona": "reduce wt"
 
-#         }],
-#         "plan": 
-#            [ {
-#                 "plan_level": "B",
-#                 "status": "Created",
-#                 "duration": 33,
-#                 "start_time": "2024-08-23",
-#                 "end_time": "2024-12-23"
-#             }]} 
-#     response = requests.post(BASE_URL  + "/clientAllDetail" , json=data)
-#     assert response.status_code == 200
+        }],
+        "plan": 
+           [ {
+                "plan_level": "B",
+                "status": "Created",
+                "duration": 33,
+                "start_time": "2024-08-23",
+                "end_time": "2024-12-23"
+            }]} 
+    response = requests.post(BASE_URL  + "/clientAllDetail" , json=data)
+    assert response.status_code == 200
 
 
 # def test_post_diet():
