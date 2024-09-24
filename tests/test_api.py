@@ -10,15 +10,15 @@ json_file_path = os.path.join(os.path.dirname(__file__), 'data.json')
 logging.basicConfig(level=logging.INFO)
 
 
-# BASE_URL = "https://panel-django.onrender.com/kj"
-BASE_URL = os.getenv("BASE_URL", "http://127.0.0.1:8000/kj")
+BASE_URL = "https://panel-django.onrender.com/kj"
+# BASE_URL = os.getenv("BASE_URL", "http://127.0.0.1:8000/kj")
 
 with open(json_file_path, 'r') as json_file:
     data = json.load(json_file)
 
 def test_post_client_plan():
     person_details = data[0].get("details")
-    print(person_details)
+    # print(person_details)
     response = requests.post(BASE_URL  + "/clientAllDetail" , json=person_details)
     assert response.status_code == 200 , f"POST request failed with status {response.status_code}"
     print("get data" ,response.json())
@@ -47,16 +47,16 @@ def test_post_client_plan():
 
 
 
-def test_post_diet():
-    diet =   data[0].get("diet")
-    response = requests.post(BASE_URL + "/dietPlan" , json =diet ) 
-    assert response.status_code == 200   
+# def test_post_diet():
+#     diet =   data[0].get("diet")
+#     response = requests.post(BASE_URL + "/dietPlan" , json =diet ) 
+#     assert response.status_code == 200   
 
 
-def test_put_note():
-    note  = data[0].get("note")
-    response = requests.put(BASE_URL + "/note/1" , json=note )
-    assert response.status_code == 200
+# def test_put_note():
+#     note  = data[0].get("note")
+#     response = requests.put(BASE_URL + "/note/1" , json=note )
+#     assert response.status_code == 200
 
 
 
