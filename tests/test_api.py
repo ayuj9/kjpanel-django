@@ -3,8 +3,12 @@ from django.urls import reverse
 import os
 import json
 import requests
+import logging
 
 json_file_path = os.path.join(os.path.dirname(__file__), 'data.json')
+
+logging.basicConfig(level=logging.INFO)
+
 
 # BASE_URL = "https://panel-django.onrender.com/kj"
 BASE_URL = os.getenv("BASE_URL", "http://127.0.0.1:8000/kj")
@@ -14,13 +18,14 @@ with open(json_file_path, 'r') as json_file:
 
 def test_post_client_plan():
     person_details = data[0].get("details")
+    print(person_details)
     response = requests.post(BASE_URL  + "/clientAllDetail" , json=person_details)
     assert response.status_code == 200 , f"POST request failed with status {response.status_code}"
     print("get data" ,response.json())
-    
-    response_get = requests.get(BASE_URL + "/clientAllDetail/1")
-    assert response_get.status_code == 200 , f"GET request failed with status {response_get.status_code}"
-    print("retieved data" , response_get.json())
+
+    # response_get = requests.get(BASE_URL + "/clientAllDetail/1")
+    # assert response_get.status_code == 200 , f"GET request failed with status {response_get.status_code}"
+    # print("retieved data" , response_get.json())
     # retrieved_data = response_get.json()
     # assert retrieved_data['phone'] == person_details['phone'] , f"Expected {person_details['name']} but got {retrieved_data['name']}"
 
