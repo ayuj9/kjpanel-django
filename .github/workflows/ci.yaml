@@ -56,5 +56,7 @@ jobs:
           done
        
       - name: test file
+        env:
+         DATABASE_URL: postgres://postgres:password@localhost:5432/test_db
         run: source ./bashScripts/run_test.sh
 
