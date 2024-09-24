@@ -18,16 +18,14 @@ with open(json_file_path, 'r') as json_file:
 
 def test_post_client_plan():
     person_details = data[0].get("details")
-    # print(person_details)
     response = requests.post(BASE_URL  + "/clientAllDetail" , json=person_details)
     assert response.status_code == 200 , f"POST request failed with status {response.status_code}"
     print("get data" ,response.json())
-
-    # response_get = requests.get(BASE_URL + "/clientAllDetail/1")
-    # assert response_get.status_code == 200 , f"GET request failed with status {response_get.status_code}"
-    # print("retieved data" , response_get.json())
-    # retrieved_data = response_get.json()
-    # assert retrieved_data['phone'] == person_details['phone'] , f"Expected {person_details['name']} but got {retrieved_data['name']}"
+    response_get = requests.get(BASE_URL + "/clientAllDetail/1")
+    assert response_get.status_code == 200 , f"GET request failed with status {response_get.status_code}"
+    print("retieved data" , response_get.json())
+    retrieved_data = response_get.json()
+    assert retrieved_data['phone'] == person_details['phone'] , f"Expected {person_details['name']} but got {retrieved_data['name']}"
 
 
 
