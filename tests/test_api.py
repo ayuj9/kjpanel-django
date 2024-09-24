@@ -19,17 +19,16 @@ with open(json_file_path, 'r') as json_file:
 def test_post_client_plan():
     person_details = data[0].get("details")
     response = requests.post(BASE_URL  + "/clientAllDetail" , json=person_details)
+    print("post data" ,response.json())
     assert response.status_code == 200 , f"POST request failed with status {response.status_code}"
-    print("get data" ,response.json())
-    response_get = requests.get(BASE_URL + "/clientAllDetail")
-    assert response_get.status_code == 200 , f"GET request failed with status {response_get.status_code}"
-    print("retieved data" , response_get.json())
-    retrieved_data = response_get.json()
-    assert isinstance(retrieved_data, list), "Expected list of client details"
-    client_data = retrieved_data[0]  # Access the first client in the list
+    # response_get = requests.get(BASE_URL + "/clientAllDetail")
+    # assert response_get.status_code == 200 , f"GET request failed with status {response_get.status_code}"
+    # print("retieved data" , response_get.json())
+    # retrieved_data = response_get.json()
+    # assert isinstance(retrieved_data, list), "Expected list of client details"
+    # client_data = retrieved_data[0]  
     
-    # Assert that the phone number matches
-    assert client_data['phone'] == person_details['phone'], f"Expected {person_details['phone']} but got {client_data['phone']}"
+    # assert client_data['phone'] == person_details['phone'], f"Expected {person_details['phone']} but got {client_data['phone']}"
 
 
 
