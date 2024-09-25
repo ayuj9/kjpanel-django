@@ -11,15 +11,15 @@ jobs:
     runs-on: ubuntu-latest
     env:
       CI: true
-      DB_NAME: mydatabase
+      DB_NAME: kjpanel
       DB_USER: myuser
-      DB_PASSWORD: mypassword
+      DB_PASSWORD: 12345
       DB_HOST: localhost
       DB_PORT: 5430
 
     services:
       postgres:
-        image: postgres:16
+        image: postgres:17
         ports:
           - 5430:5432
         env:

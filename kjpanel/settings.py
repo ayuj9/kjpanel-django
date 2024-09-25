@@ -132,6 +132,16 @@ if os.environ.get('CI',False):
     }
 
 else:
+    #    DATABASES = {
+    #     'default': {
+    #         'ENGINE': 'django.db.backends.postgresql',
+    #         'NAME': 'kjpanel',
+    #         'PASSWORD': '12345',
+    #         'HOST': 'localhost',
+    #         'USER':'postgres',
+    #         'PORT': 5435,
+    #     }
+    # }
     DATABASES = {
     'default': dj_database_url.parse(os.environ.get('DB_URL'))
     }
