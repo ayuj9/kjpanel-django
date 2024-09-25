@@ -4,8 +4,8 @@
       "name": "lhyati ji ",
       "age": 21,
       "gender": "m",
-      "phone": "24091513",
-      "email": "ay2u12@gmail.com",
+      "phone": "24091191",
+      "email": "ay22i@gmail.com",
       "diet_preference": "Vegetarian",
       "diet_language": "hindi",
       "note": "",
@@ -31,7 +31,7 @@
           "status": "Created",
           "duration": 33,
           "start_time": "2024-08-23",
-          "end_time": "2024-12-23"
+          "end_time": "2024-12-25"
         }
       ]
     }
@@ -104,11 +104,11 @@
       },
       "note": "",
       "meal_Time": {},
-      "date": "2024-08-05",
-      "client": 2
+      "date": "2024-08-04",
+      "client": 1
     }
   },
   {
-    "note": "This note is to be updated"
+    "note": { "note": "This note is to be updated ok ok " }
   }
 ]
