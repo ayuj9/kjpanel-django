@@ -85,6 +85,7 @@ def test_post_diet():
     client = response.json()["client"]
     date = response.json()["date"]
     response_get = requests.get(BASE_URL + "/client/" + str(client) + "/diet_plan/" + date + "/")
+    print(response_get)
     if  response_get.status_code != 200 :
          raise ValueError("Error occured in GET Diet request")
     if  response_get["date"] != date :
