@@ -41,7 +41,7 @@ def test_post_client_plan():
                 raise Exception(f"GET request failed with status {response.status_code}")
         assert response_get.status_code == 200 , f"GET request failed with status {response_get.status_code}"
         retrieved_data = response_get.json()
-        assert isinstance(retrieved_data, list), "Expected list of client details"
+        assert isinstance(retrieved_data, list)
         client_data = retrieved_data[0]  
         assert client_data['phone'] == User_details['phone'], f"Expected {User_details['phone']} but got {client_data['phone']}"
 
@@ -82,11 +82,10 @@ def test_post_diet():
     date = response.json()["date"]
     response_get = requests.get(BASE_URL + "/client/" + str(client) + "/diet_plan/" + date + "/")
     recieved_data = response_get.json()
-    print(recieved_data)
-    print(recieved_data["data"])
+    assert isinstance(recieved_data, list)
     if  response_get.status_code != 200 :
          raise ValueError("Error occured in GET Diet request")
-    if  recieved_data["date"] != date :
+    if  recieved_data[0]["date"] != date :
         raise ValueError("Date not matched of diet plan")
   except ValueError as val_err:
         print(f"Value error: {val_err}")
