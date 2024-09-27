@@ -24,9 +24,6 @@ router.register('clientName' , views.ClientNameViewSet , basename='client-name')
 router.register('mealTime' , views.MealTimeViewSet , basename='meal-time')
 router.register('measures', views.MeasureDetailsViewSet , basename='measure-details')
 router.register('zone' , views.ZoneViewSet , basename='zone-time')
-
-
-
 # router.register('ImportRecipe' , views.import_data , basename='import-recipe')
 
 
@@ -44,13 +41,6 @@ urlpatterns += router.urls + clients_router.urls
 # Add static files in DEBUG mode
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
-
-# urlpatterns=[
-#     path('/' , include(router.urls)),
-
-# ]
-    
 
 
     

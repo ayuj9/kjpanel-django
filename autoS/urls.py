@@ -5,7 +5,7 @@ from django.conf.urls.static import static
 
 
 urlpatterns=[
-    path('' , views.import_data )
+    path('import/' , views.import_data )
 ]
 
 # router = routers.DefaultRouter()

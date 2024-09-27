@@ -33,8 +33,7 @@ def test_post_client_plan():
         response = requests.post(BASE_URL  + "/clientAllDetail/" , json=User_details)
         if response.status_code != 201:
                 raise Exception(f"POST request failed with status {response.status_code}")
-        assert response.status_code == 201 , f"POST request failed with status {response.status_code}"
-        print("POST",response.json())    
+        assert response.status_code == 201 , f"POST request failed with status {response.status_code}"  
 
         response_get = requests.get(BASE_URL + "/clientAllDetail")
         if response.status_code != 201:
@@ -80,6 +79,7 @@ def test_post_diet():
     assert response.status_code == 201   
     client = response.json()["client"]
     date = response.json()["date"]
+
     response_get = requests.get(BASE_URL + "/client/" + str(client) + "/diet_plan/" + date + "/")
     recieved_data = response_get.json()
     assert isinstance(recieved_data, list)
@@ -90,36 +90,6 @@ def test_post_diet():
   except ValueError as val_err:
         print(f"Value error: {val_err}")
       
-
-# def test_put_note():
-#     data = load_json_file(json_file_path)
-#     note  = data[0].PUT("note")
-#     response = requests.put(BASE_URL + "/note/1/" , json=note )
-#     assert response.status_code == 200
-
-
-# def test_put_note():
-#     try:
-#         data = load_json_file(json_file_path)
-#         if data is None:
-#             raise ValueError("Failed to load data from the JSON file.")
-#         note = data[2].get("note")
-#         if note is None:
-#             raise ValueError("No 'note' found in the JSON data.")
-
-#         response = requests.put(BASE_URL + "/note/1/", json={"note": note})
-#         assert response.status_code == 200, f"PUT request failed with status {response.status_code}"
-#         print("PUT request successful, note updated.")
-
-#     except requests.exceptions.RequestException as req_err:
-#         print(f"Request error: {req_err}")
-#     except ValueError as val_err:
-#         print(f"Value error: {val_err}")
-#     except AssertionError as assert_err:
-#         print(f"Assertion error: {assert_err}")
-#     except Exception as e:
-#         print(f"An unexpected error occurred: {str(e)}")
-
 
         
 
