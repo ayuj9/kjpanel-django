@@ -14,6 +14,6 @@ EXPOSE 8080
 
 ENV DJANGO_SETTINGS_MODULE=kjpanel.settings
 
-CMD ["gunicorn", "--bind", "0.0.0.0:8080", "kjpanel.wsgi:application"]
+CMD [ "--bind", "0.0.0.0:8080", "kjpanel.wsgi:application"]
 
 
