@@ -34,22 +34,18 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
 
       - name: Set up Python
-        uses: actions/setup-python@v3
+        uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python-version }}
 
-      - name: Setting django server
-        run: |
-          python3 -m venv .venv1
-          source .venv1/bin/activate
-          pip install -r requirements.txt
-          python -m pip install pytest
-        # bash ./bashScripts/run_test.sh &
-        env:
-          DATABASE_URL: postgres://postgres:password@localhost:5432/test_db
+      - run: pip install -r requirements.txt # install all our dependencies for the project
+      - run: pytest .
+
+        # env:
+        #   DATABASE_URL: postgres://postgres:password@localhost:5432/test_db
 
       # - name: Waiting for Server to come up
       #   run: |
@@ -61,10 +57,3 @@ jobs:
       #       echo "Waiting ..."
       #       sleep 10
       #     done
-
-      - name: Run Test
-        if: ${{env.RUN_TEST == 'Yes'}}
-        env:
-          DATABASE_URL: postgres://${{ env.DB_USER }}:${{ env.DB_PASSWORD }}@${{ env.DB_HOST }}:${{ env.DB_PORT }}/test_db
-        run: |
-          pytest
