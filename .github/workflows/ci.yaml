@@ -41,22 +41,8 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
-      - run: pip install -r requirements.txt # install all our dependencies for the project
+      - run: make install
 
       - name: Run test
         if: ${{ env.RUN_TEST == 'Yes' }}
         run: pytest .
-
-        # env:
-        #   DATABASE_URL: postgres://postgres:password@localhost:5432/test_db
-
-      # - name: Waiting for Server to come up
-      #   run: |
-      #     for i in {1..30}; do
-      #       if curl -s http://127.0.0.1:8000/ > /dev/null; then
-      #         echo "Server is up"
-      #         break
-      #       fi
-      #       echo "Waiting ..."
-      #       sleep 10
-      #     done
