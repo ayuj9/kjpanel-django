@@ -43,6 +43,9 @@ jobs:
 
       - name: Setting django server
         run: |
+          python3 -m venv .venv1
+          source .venv1/bin/activate
+          pip install -r requirements.txt
           python -m pip install pytest
         # bash ./bashScripts/run_test.sh &
         env:
