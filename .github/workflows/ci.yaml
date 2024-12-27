@@ -43,7 +43,8 @@ jobs:
 
       - name: Setting django server
         run: |
-          bash ./bashScripts/run_test.sh &
+          python -m pip install pytest .
+        # bash ./bashScripts/run_test.sh &
         env:
           DATABASE_URL: postgres://postgres:password@localhost:5432/test_db
 
