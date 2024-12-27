@@ -1,19 +1,19 @@
-FROM python:3.12.4-slim-bullseye
+FROM python:3.12.6
 
 WORKDIR /app
 
 COPY . /app/
 
-COPY requirements.txt ./
-
-RUN pip install --upgrade pip
+RUN apt-get update -y
 
 RUN pip install --no-cache-dir -r requirements.txt
-COPY . .
-EXPOSE 8080
 
-ENV DJANGO_SETTINGS_MODULE=kjpanel.settings
+EXPOSE 8000
 
-CMD [ "--bind", "0.0.0.0:8080", "kjpanel.wsgi:application"]
+CMD [ "bash", "/app/entrypoint.sh" ]
+
+# CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+
+# CMD [ "--bind", "0.0.0.0:8000", "kjpanel.wsgi:application"]
 
 

@@ -138,6 +138,7 @@ class ClientDietPlanViewSet(ModelViewSet , CreateModelMixin , UpdateModelMixin):
 class NoteViewSet(ModelViewSet):
     serializer_class = AddNoteSerializer
     queryset = Diet_Plan.objects.all()
+     
    
 class MealTimeViewSet(ModelViewSet):
     serializer_class = MealTimeSerializer
@@ -156,8 +157,13 @@ class SearchRecipeViewSet(ModelViewSet):
 class ClientNameViewSet(ModelViewSet):
     queryset = Client.objects.all()
     serializer_class = ClientNameSerializer
-    filter_backends = [SearchFilter , StartsWithFilterBackend]
+    filter_backends = [StartsWithFilterBackend]
     search_fields = ['name','phone' ]
+
+    def list(self, request, *args, **kwargs):
+        response = super().list(request, *args, **kwargs)
+        # Print or log the results
+        return response
 
 
 class ZoneViewSet(ModelViewSet):
@@ -168,10 +174,20 @@ class ZoneViewSet(ModelViewSet):
 
     
 def import_data(request):
-    if request.method == 'POST' and request.FILES['json_file']:
-        json_file = request.FILES['json_file']
-        data = json.load(json_file)     
+    if request.method == 'POST':
+        if 'json_file' in request.FILES:
+            json_file = request.FILES['json_file']
+            data = json.load(json_file)
+        #     except json.JSONDecodeError:
+        #         print("Error: Uploaded file is not a valid JSON file.")
+        # else:
+        #     print("No file uploaded.")
+    # if request.method == 'POST' and request.FILES['json_file']:
+    #     json_file = request.FILES['json_file']
+    #     data = json.load(json_file)   
+    #     print(data[0])
         for i in range(1,813):
+
             names = RecipeData(
                 id = data[i]['id'] , # Accessing data with str(i) as key
                 name = data[i]["name"],

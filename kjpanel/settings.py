@@ -29,7 +29,6 @@ SECRET_KEY = 'django-insecure-pmlaz_46i1oe*+%jot@h=k2sqw2zg@f+h2mo@t_l)tpsr64p(t
 DEBUG =False
 
 
-# Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -43,7 +42,7 @@ INSTALLED_APPS = [
     'django_filters',
     'rest_framework',
     'corsheaders',
-    'debug_toolbar'
+
 ]
 
 MIDDLEWARE = [
@@ -112,26 +111,30 @@ WSGI_APPLICATION = 'kjpanel.wsgi.application'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME':'kjpanel',
-#     }
-# }
-if os.environ.get('CI',False):
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME':os.getenv('DB_NAME'),
-            'USER': os.getenv('DB_USER') ,
-            'PASSWORD': os.getenv('DB_PASSWORD'),
-            'HOST': os.getenv('DB_HOST'),
-            'PORT': os.getenv('DB_PORT'),
-        }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.getenv('DATABASE_NAME'),
+        'USER': os.getenv('DATABASE_USER'),
+        'PASSWORD': os.getenv('DATABASE_PASSWORD'),
+        'HOST': os.getenv('DATABASE_HOST'),
+        'PORT': os.getenv('DATABASE_PORT'),
     }
+}
 
-else:
+# if os.environ.get('CI',False):
+#     DATABASES = {
+#         'default': {
+#             'ENGINE': 'django.db.backends.postgresql',
+#             'NAME':os.getenv('DB_NAME'),
+#             'USER': os.getenv('DB_USER') ,
+#             'PASSWORD': os.getenv('DB_PASSWORD'),
+#             'HOST': os.getenv('DB_HOST'),
+#             'PORT': os.getenv('DB_PORT'),
+#         }
+#     }
+
+# else:
     #    DATABASES = {
     #     'default': {
     #         'ENGINE': 'django.db.backends.postgresql',
@@ -142,9 +145,12 @@ else:
     #         'PORT': 5435,
     #     }
     # }
-    DATABASES = {
-    'default': dj_database_url.parse(os.environ.get('DB_URL'))
-    }
+
+
+
+    # DATABASES = {
+    # 'default': dj_database_url.parse(os.environ.get('DB_URL'))
+    # }
 
 
 

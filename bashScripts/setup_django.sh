@@ -14,8 +14,8 @@ pip install -r requirements.txt
 echo "migrating"
 python manage.py migrate
 
-echo "starting server"
-python manage.py runserver
+# echo "starting server"
+# python manage.py runserver
 
 
 

@@ -2,7 +2,7 @@ from rest_framework.filters import BaseFilterBackend
 
 class StartsWithFilterBackend(BaseFilterBackend):
     def filter_queryset(self, request, queryset, view):
-        phone = request.query_params.get('phone', None)
-        if phone:
-            queryset = queryset.filter(phone__startswith=phone)
+        search = request.query_params.get('search', None)
+        if search:
+            queryset = queryset.filter(name__icontains=search) | queryset.filter(phone__startswith=search) 
         return queryset

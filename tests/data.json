@@ -36,6 +36,85 @@
       ]
     }
   },
+  {
+    "detail_schema": {
+      "id": { "type": "integer" },
+      "name": { "type": "string" },
+      "age": { "type": "integer" },
+      "gender": { "type": "string" },
+      "phone": { "type": "string" },
+      "email": { "type": "string" },
+      "diet_preference": { "type": "string" },
+      "diet_language": { "type": "string" },
+      "note": { "type": "string" },
+      "address": {
+        "type": "object",
+        "properties": {
+          "city": { "type": "string" },
+          "state": { "type": "string" },
+          "country": { "type": "string" },
+          "zone": { "type": "string" }
+        },
+        "required": ["city", "state", "country", "zone"]
+      },
+      "insights": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "height": { "type": "integer" },
+            "current_weight": { "type": "integer" },
+            "target_weight": { "type": "integer" },
+            "height_Unit": { "type": "string" },
+            "weight_Unit": { "type": "string" },
+            "persona": { "type": "string" }
+          },
+          "required": [
+            "height",
+            "current_weight",
+            "target_weight",
+            "height_Unit",
+            "weight_Unit",
+            "persona"
+          ]
+        }
+      },
+      "plan": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "plan_level": { "type": "string" },
+            "status": { "type": "string" },
+            "duration": { "type": "integer" },
+            "start_time": { "type": "string", "format": "date" },
+            "end_time": { "type": "string", "format": "date" }
+          },
+          "required": [
+            "plan_level",
+            "status",
+            "duration",
+            "start_time",
+            "end_time"
+          ]
+        }
+      }
+    },
+    "required": [
+      "id",
+      "name",
+      "age",
+      "gender",
+      "phone",
+      "email",
+      "diet_preference",
+      "diet_language",
+      "note",
+      "address",
+      "insights",
+      "plan"
+    ]
+  },
 
   {
     "diet": {
@@ -104,7 +183,7 @@
       },
       "note": "",
       "meal_Time": {},
-      "date": "2024-08-05",
+      "date": "2024-09-05",
       "client": 1
     }
   },
