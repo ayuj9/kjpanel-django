@@ -61,4 +61,5 @@ jobs:
         if: ${{env.RUN_TEST == 'Yes'}}
         env:
           DATABASE_URL: postgres://postgres:password@localhost:5432/test_db
-        run: pytest
+        run: |
+          pytest
