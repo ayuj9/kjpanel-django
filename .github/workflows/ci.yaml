@@ -16,7 +16,7 @@ jobs:
       DB_PASSWORD: ghar12345
       DB_HOST: localhost
       DB_PORT: 5432
-      RUN_TEST: true
+      RUN_TEST: Yes
 
     services:
       postgres:
@@ -43,6 +43,8 @@ jobs:
 
       - name: Setting django server
         run: bash ./bashScripts/setup_django.sh &
+        env:
+          DATABASE_URL: postgres://postgres:password@localhost:5432/test_db
 
       # - name: Waiting for Server to come up
       #   run: |
@@ -56,7 +58,7 @@ jobs:
       #     done
 
       - name: test file
-        if: ${{env.RUN_TEST == true}}
+        if: ${{env.RUN_TEST == 'Yes'}}
         env:
           DATABASE_URL: postgres://postgres:password@localhost:5432/test_db
         run: pytest
