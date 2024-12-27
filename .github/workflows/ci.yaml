@@ -7,7 +7,7 @@ on:
     branches: ["main"]
 
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
     env:
       CI: true
@@ -57,8 +57,8 @@ jobs:
       #       sleep 10
       #     done
 
-      # - name: test file
-      #   if: ${{env.RUN_TEST == 'Yes'}}
-      #   env:
-      #     DATABASE_URL: postgres://postgres:password@localhost:5432/test_db
-      #   run: pytest
+      - name: test file
+        if: ${{env.RUN_TEST == 'Yes'}}
+        env:
+          DATABASE_URL: postgres://postgres:password@localhost:5432/test_db
+        run: pytest
