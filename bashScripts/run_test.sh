@@ -11,12 +11,5 @@ echo "Virtual Environment activated successfully."
 echo "Installing dependencies"
 pip install -r ./tests/requirements.txt
 
+python -m pip install pytest . 
 
-echo "Starting test execution using pytest"
-pytest -s
-if [ $? -eq 0 ]; then
-  echo "Tests ran successfully"
-else
-  echo "Error running tests"
-  exit 1
-fi

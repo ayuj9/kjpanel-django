@@ -58,9 +58,9 @@ jobs:
       #       sleep 10
       #     done
 
-      # - name: test file
-      #   if: ${{env.RUN_TEST == 'Yes'}}
-      #   env:
-      #     DATABASE_URL: postgres://${{ env.DB_USER }}:${{ env.DB_PASSWORD }}@${{ env.DB_HOST }}:${{ env.DB_PORT }}/test_db
-      #   run: |
-      #     pytest
+      - name: Run Test
+        if: ${{env.RUN_TEST == 'Yes'}}
+        env:
+          DATABASE_URL: postgres://${{ env.DB_USER }}:${{ env.DB_PASSWORD }}@${{ env.DB_HOST }}:${{ env.DB_PORT }}/test_db
+        run: |
+          pytest
