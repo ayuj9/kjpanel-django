@@ -12,5 +12,11 @@ echo "Installing dependencies"
 pip install -r ./tests/requirements.txt
 
 
-echo "test File started"
+echo "Starting test execution using pytest"
 pytest -s
+if [ $? -eq 0 ]; then
+  echo "Tests ran successfully"
+else
+  echo "Error running tests"
+  exit 1
+fi
