@@ -42,24 +42,25 @@ jobs:
           python-version: ${{ matrix.python-version }}
 
       - name: Setting django server
-        run: bash ./bashScripts/setup_django.sh &
-        env:
-          DATABASE_URL: postgres://postgres:password@localhost:5432/test_db
-
-      # - name: Waiting for Server to come up
-      #   run: |
-      #     for i in {1..30}; do
-      #       if curl -s http://127.0.0.1:8000/ > /dev/null; then
-      #         echo "Server is up"
-      #         break
-      #       fi
-      #       echo "Waiting ..."
-      #       sleep 10
-      #     done
-
-      - name: test file
-        if: ${{env.RUN_TEST == 'Yes'}}
-        env:
-          DATABASE_URL: postgres://postgres:password@localhost:5432/test_db
         run: |
-          pytest
+          bash ./bashScripts/run_test.sh &
+        env:
+          DATABASE_URL: postgres://postgres:password@localhost:5432/test_db
+
+      - name: Waiting for Server to come up
+        run: |
+          for i in {1..30}; do
+            if curl -s http://127.0.0.1:8000/ > /dev/null; then
+              echo "Server is up"
+              break
+            fi
+            echo "Waiting ..."
+            sleep 10
+          done
+
+      # - name: test file
+      #   if: ${{env.RUN_TEST == 'Yes'}}
+      #   env:
+      #     DATABASE_URL: postgres://${{ env.DB_USER }}:${{ env.DB_PASSWORD }}@${{ env.DB_HOST }}:${{ env.DB_PORT }}/test_db
+      #   run: |
+      #     pytest
