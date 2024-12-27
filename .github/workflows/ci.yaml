@@ -42,7 +42,10 @@ jobs:
           python-version: ${{ matrix.python-version }}
 
       - run: pip install -r requirements.txt # install all our dependencies for the project
-      - run: pytest .
+
+      - name: Run test
+        if: ${{ env.RUN_TEST == 'Yes' }}
+        run: pytest .
 
         # env:
         #   DATABASE_URL: postgres://postgres:password@localhost:5432/test_db
