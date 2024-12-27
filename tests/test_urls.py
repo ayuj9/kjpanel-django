@@ -4,8 +4,6 @@ from kjapp.views import CLientViewSet , CLientAllDetailsViewSet
 from rest_framework import status
 import os
 import json
-import jsonschema
-from jsonschema import validate
 import logging
 json_file_path = os.path.join(os.path.dirname(__file__), 'data.json')
 
