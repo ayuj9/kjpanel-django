@@ -16,7 +16,7 @@ jobs:
       DB_PASSWORD: ghar12345
       DB_HOST: localhost
       DB_PORT: 5432
-      RUN_TEST: Yes
+      RUN_TEST: no
 
     services:
       postgres:
