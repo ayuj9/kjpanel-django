@@ -11,8 +11,9 @@ from .filters import StartsWithFilterBackend
 from rest_framework import status
 from django.utils import timezone
 import json
-import datetime
+from django.http import JsonResponse
 import pytz 
+from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
 
@@ -157,7 +158,7 @@ class SearchRecipeViewSet(ModelViewSet):
 class ClientNameViewSet(ModelViewSet):
     queryset = Client.objects.all()
     serializer_class = ClientNameSerializer
-    filter_backends = [StartsWithFilterBackend]
+    # filter_backends = [StartsWithFilterBackend]
     search_fields = ['name','phone' ]
 
     def list(self, request, *args, **kwargs):
@@ -172,30 +173,23 @@ class ZoneViewSet(ModelViewSet):
    
     
 
-    
+@csrf_exempt
 def import_data(request):
     if request.method == 'POST':
         if 'json_file' in request.FILES:
             json_file = request.FILES['json_file']
-            data = json.load(json_file)
-        #     except json.JSONDecodeError:
-        #         print("Error: Uploaded file is not a valid JSON file.")
-        # else:
-        #     print("No file uploaded.")
-    # if request.method == 'POST' and request.FILES['json_file']:
-    #     json_file = request.FILES['json_file']
-    #     data = json.load(json_file)   
-    #     print(data[0])
-        for i in range(1,813):
+            if not json_file:
+                return JsonResponse({"error": "No file uploaded"}, status=400)
 
-            names = RecipeData(
-                id = data[i]['id'] , # Accessing data with str(i) as key
-                name = data[i]["name"],
-                
-                recipieLink  = data[i]['recipieLink']  # Adjust for correct key name
-                
-            )
-            names.save()
-        return render(request, 'index.html')
-    return render(request, 'index.html')
+            try:
+                data = json.load(json_file)
+                for item in data:
+                    RecipeData.objects.create(
+                        id=item.get("id"),
+                        name=item.get("name"),
+                        recipieLink=item.get("recipieLink")
+                    )
+                return JsonResponse({"message": "Data imported successfully"})
+            except Exception as e:
+                return JsonResponse({"error": str(e)}, status=400)
 
