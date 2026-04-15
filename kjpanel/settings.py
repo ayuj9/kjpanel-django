@@ -111,8 +111,13 @@ WSGI_APPLICATION = 'kjpanel.wsgi.application'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 
-DATABASES = {
-    'default': {
+if os.environ.get('DATABASE_URL'):
+    DATABASES = {
+        'default': dj_database_url.config(conn_max_age=600)
+    }
+else:
+    DATABASES = {
+        'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': os.getenv('DATABASE_NAME'),
         'USER': os.getenv('DATABASE_USER'),
@@ -120,7 +125,7 @@ DATABASES = {
         'HOST': os.getenv('DATABASE_HOST'),
         'PORT': os.getenv('DATABASE_PORT'),
     }
-}
+    }
 
 # if os.environ.get('CI',False):
 #     DATABASES = {
@@ -145,14 +150,6 @@ DATABASES = {
     #         'PORT': 5435,
     #     }
     # }
-
-
-
-    # DATABASES = {
-    # 'default': dj_database_url.parse(os.environ.get('DB_URL'))
-    # }
-
-
 
 
 # Password validation
